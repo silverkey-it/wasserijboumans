@@ -1,0 +1,99 @@
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f7fbff;
+    color: var(--wb-color-text);
+}
+
+.landing-page__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem clamp(1.5rem, 4vw, 4rem);
+    background: linear-gradient(135deg, rgba(48, 113, 169, 0.92), rgba(63, 138, 202, 0.92));
+    color: #fff;
+}
+
+.landing-page__brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.landing-page__logo {
+    width: 3rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    border-radius: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.landing-page__header h1 {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.landing-page__logout {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.landing-page__logout:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.landing-page__content {
+    flex: 1;
+    display: grid;
+    gap: 2rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.landing-page__welcome,
+.landing-page__next {
+    background-color: #fff;
+    border-radius: 1.25rem;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: 0 16px 40px rgba(48, 113, 169, 0.12);
+}
+
+.landing-page__welcome h2 {
+    margin-top: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--wb-color-primary);
+}
+
+.landing-page__welcome p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.landing-page__next h3 {
+    margin-top: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    color: var(--wb-color-primary);
+}
+
+.landing-page__next ul {
+    margin: 1rem 0 0;
+    padding-left: 1.25rem;
+    line-height: 1.5;
+}
+
+.landing-page__next li + li {
+    margin-top: 0.5rem;
+}

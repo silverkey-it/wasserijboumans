@@ -1,0 +1,46 @@
+name: Deploy React App
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t wasserijboumans:latest .
+
+      - name: Save Docker image als tar
+        run: docker save wasserijboumans:latest -o wasserijboumans.tar
+
+      - name: Fix permissies op tar-bestand
+        run: chmod 644 wasserijboumans.tar
+
+      - name: Kopieer tar naar server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          passphrase: ${{ secrets.HETZNER_SSH_KEY_PASSPHRASE }}
+          source: "./wasserijboumans.tar"
+          target: "/home/${{ secrets.HETZNER_USER }}/"
+
+      - name: Start Docker container op server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          passphrase: ${{ secrets.HETZNER_SSH_KEY_PASSPHRASE }}
+          script: |
+            docker load -i /home/${{ secrets.HETZNER_USER }}/wasserijboumans.tar
+            docker stop wasserijboumans_app || true
+            docker rm wasserijboumans_app || true
+            docker run -d --name wasserijboumans_app --network wasserijboumans_net --restart unless-stopped wasserijboumans:latest
